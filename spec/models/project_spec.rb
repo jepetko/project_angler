@@ -5,5 +5,8 @@ describe Project do
   it { should respond_to :description }
   it { should respond_to :go_live }
   it { should have_many :stories }
-  it { should have_many :inquirers }
+  it { should belong_to :inquirer }
+  it { should validate_presence_of :budget }
+  it { should validate_presence_of :description }
+  it { should validate_presence_of :inquirer }
 end

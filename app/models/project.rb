@@ -1,5 +1,7 @@
 class Project < ActiveRecord::Base
-  has_many :inquired_projects
-  has_many :inquirers, through: :inquired_projects
+  belongs_to :inquirer
   has_many :stories
+  validates_presence_of :budget
+  validates_presence_of :description
+  validates_presence_of :inquirer
 end

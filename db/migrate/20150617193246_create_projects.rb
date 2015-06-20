@@ -4,6 +4,7 @@ class CreateProjects < ActiveRecord::Migration
       t.integer :budget
       t.text :description
       t.date :go_live
+      t.integer :inquirer_id
       t.timestamps
     end
   end
