@@ -6,6 +6,18 @@ describe ProjectsController do
   let(:inquirer) { Fabricate(:inquirer) }
   let!(:projects) { [ Fabricate(:project, inquirer: inquirer), Fabricate(:project, inquirer: inquirer) ] }
 
+  describe 'GET :new' do
+    context 'success' do
+      before do
+        get :new
+      end
+
+      it 'sets a @project instances' do
+        expect(assigns(:project)).to be_a(Project)
+      end
+    end
+  end
+
   describe 'POST :create' do
 
     context 'success' do

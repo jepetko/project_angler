@@ -1,1 +1,11 @@
-%h2 hello
+%h2{'class' => 'md-display-1'} Welcome to the Software Dreams Factory. If you have any ideas about your project please don't hesitate and contact us.
+%div{'ng-controller' => 'ProjectController'}
+  =form_for @project, html: {name: 'projectForm'} do
+    %div '{{projectForm.$error}}'
+    %md-content{'layout' => 'column', 'layout-sm' => 'column'}
+      %md-input-container{'flex' => ''}
+        %label Your budget:
+        %input{'ng-model' => 'project.budget', 'budget' => '', 'required' => ''}
+      %md-input-container{'flex' => ''}
+        %label Desired go-live date:
+        %input{'ng-model' => 'project.goLive'}

@@ -12,6 +12,10 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def new
+    @project = Project.new
+  end
+
   private def project_params
     params.require(:project).permit :budget, :go_live, :description, :inquirer_id
   end
