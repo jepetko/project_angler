@@ -13,3 +13,20 @@
  *= require_tree .
  *= require_self
  */
+
+.container {
+    padding: 10px;
+}
+
+.form-container {
+    max-width: 33.33333%;
+    margin-left: 33.33333%;
+}
+
+.container .description {
+    height: 5em;
+}
+
+span.bold {
+    font-weight: bold;
+}

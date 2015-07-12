@@ -1,11 +1,28 @@
-%h2{'class' => 'md-display-1'} Welcome to the Software Dreams Factory. If you have any ideas about your project please don't hesitate and contact us.
-%div{'ng-controller' => 'ProjectController'}
-  =form_for @project, html: {name: 'projectForm'} do
-    %div '{{projectForm.$error}}'
-    %md-content{'layout' => 'column', 'layout-sm' => 'column'}
-      %md-input-container{'flex' => ''}
-        %label Your budget:
-        %input{'ng-model' => 'project.budget', 'budget' => '', 'required' => ''}
-      %md-input-container{'flex' => ''}
-        %label Desired go-live date:
-        %input{'ng-model' => 'project.goLive'}
+%md-content.container
+  %h2.md-display-1 Welcome to the Software Dreams Factory. If you have any ideas about your project please don't hesitate and contact us.
+  %div{'ng-controller' => 'ProjectController', 'class' => 'form-container'}
+    =form_for @project, html: {name: 'projectForm'} do
+      %div '{{projectForm.$error}}'
+      %md-content{'layout' => 'column', 'layout-sm' => 'column'}
+        %md-input-container{'flex' => ''}
+          %label Your budget:
+          %input{'ng-model' => 'project.budget', 'budget' => '', 'required' => ''}
+        %md-input-container{'flex' => ''}
+          %label Desired go-live date:
+          %input{'type' => 'date', 'ng-model' => 'project.goLive'}
+        %md-input-container{'flex' => ''}
+          %label Describe the main purpose of the application, e.g. the application makes the user able to book a holiday.
+          %textarea.description{'ng-model' => 'project.description', 'columns' => '1', 'md-maxlength' => 150, 'required' => ''}
+        %md-content
+          %div Now, describe the most important user stories.
+          %div Example:
+          %div
+            %span.bold As a
+            %span customer,
+          %div
+            %span.bold I want to
+            %span add some items to my bag
+          %div
+            %span.bold So that I
+            %span can buy it.
+          %user-story{'ng-model' => 'project.story'}

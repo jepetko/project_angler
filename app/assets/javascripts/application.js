@@ -80,4 +80,24 @@
             }
         };
     }]);
+    app.directive('userStory', [function() {
+        return {
+            restrict: 'E',
+            require: 'ngModel',
+            replace: true,
+            template: '<textarea></textarea>',
+            link: function(scope, el, attrs, ngModel) {
+                scope.parts = {
+                    asA: '',
+                    iWant: '',
+                    soThat: ''
+                }
+                el.on('keydown', function(evt) {
+                    var regExp = new RegExp('^(As a(.*(?=I want to))?)(I want to(.*(?=So that I))?)?(So that I(.*)?)?\\.?$', 'gi');
+                    var groups = regExp.exec(ngModel.$modelValue);
+                    console.info(groups);
+                });
+            }
+        };
+    }]);
 })(angular);
