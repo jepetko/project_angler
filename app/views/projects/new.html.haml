@@ -3,6 +3,8 @@
   %div{'ng-controller' => 'ProjectController', 'class' => 'form-container'}
     =form_for @project, html: {name: 'projectForm'} do
       %div '{{projectForm.$error}}'
+      %div '{{projectForm.$submitted}}'
+      %div '{{project}}'
       %md-content{'layout' => 'column', 'layout-sm' => 'column'}
         %md-input-container{'flex' => ''}
           %label Your budget:
@@ -13,16 +15,20 @@
         %md-input-container{'flex' => ''}
           %label Describe the main purpose of the application, e.g. the application makes the user able to book a holiday.
           %textarea.description{'ng-model' => 'project.description', 'columns' => '1', 'md-maxlength' => 150, 'required' => ''}
+        %md-input-container{'flex' => ''}
+          %label Now, describe the most important user stories. Example: *As a* customer, *I want to* add some items to my bag, *So that I* can buy it.
+          %user-story{'ng-model' => 'project.currentStory'}
         %md-content
-          %div Now, describe the most important user stories.
-          %div Example:
-          %div
-            %span.bold As a
-            %span customer,
-          %div
-            %span.bold I want to
-            %span add some items to my bag
-          %div
-            %span.bold So that I
-            %span can buy it.
-          %user-story{'ng-model' => 'project.story'}
+          %md-button{'ng-click' => 'addCurrentStory()', 'class' => 'md-raised md-primary', 'ng-disabled' => '!isCurrentStoryComplete()'}
+            Add the user story
+        %md-chips{'ng-model' => 'project.stories'}
+          %md-chip-template
+            %span
+              *As a*
+            %span {{$chip.asA}}
+            %span
+              *I want to*
+            %span {{$chip.iWant}}
+            %span
+              *So that I*
+            %span {{$chip.soThat}}

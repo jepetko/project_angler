@@ -19,8 +19,8 @@
 }
 
 .form-container {
-    max-width: 33.33333%;
-    margin-left: 33.33333%;
+    max-width: 90%;
+    margin-left: 5%;
 }
 
 .container .description {
@@ -29,4 +29,13 @@
 
 span.bold {
     font-weight: bold;
+}
+
+md-chip-template > span:nth-child(even) {
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.current-story {
+    width: 50%;
 }
