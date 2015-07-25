@@ -6,50 +6,57 @@
       %div '{{projectForm.$submitted}}'
       %div '{{project}}'
       %md-content
-        %md-input-container{'flex' => ''}
-          %label Your budget:
-          %input{'ng-model' => 'project.budget', 'budget' => '', 'required' => ''}
-        %md-input-container{'flex' => ''}
-          %label Desired go-live date:
-          %input{'type' => 'date', 'ng-model' => 'project.goLive'}
-        %md-input-container{'flex' => ''}
-          %label Describe the main purpose of the application, e.g. the application makes the user able to book a holiday.
-          %textarea.description{'ng-model' => 'project.description', 'columns' => '1', 'md-maxlength' => 150, 'required' => ''}
-        %md-input-container{'flex' => ''}
-          %label Now, describe the most important user stories. Example: *As a* customer, *I want to* add some items to my bag, *So that I* can buy it.
-          %user-story{'ng-model' => 'project.currentStory'}
-        %md-chips{'ng-model' => 'project.currentStories', 'ng-show' => 'project.currentStories.length > 0', 'readonly' => 'true'}
-          %md-chip-template
-            %span
-              *As a*
-            %span.story-part{'ng-if' => '$chip.asA'} {{$chip.asA}}
-            %span{'ng-if' => '!$chip.asA'} [role]
-            %span
-              *I want to*
-            %span.story-part{'ng-if' => '$chip.iWant'} {{$chip.iWant}}
-            %span{'ng-if' => '!$chip.iWant'} [do something]
-            %span
-              *So that I*
-            %span.story-part{'ng-if' => '$chip.soThat'} {{$chip.soThat}}
-            %span{'ng-if' => '!$chip.soThat'} [can achieve something]'}}
-        %md-content
-          %md-button{'ng-click' => 'addCurrentStory()', 'class' => 'md-raised md-primary', 'ng-disabled' => '!isCurrentStoryComplete()'}
-            Add the user story
-        %md-chips{'ng-model' => 'project.stories', 'ng-show' => 'project.stories.length > 0'}
-          %md-chip-template
-            %span
-              *As a*
-            %span.story-part {{$chip.asA}}
-            %span
-              *I want to*
-            %span.story-part {{$chip.iWant}}
-            %span
-              *So that I*
-            %span.story-part {{$chip.soThat}}
-        %md-input-container{'flex' => ''}
-          %label If you have already a project specification, please upload it.
-          %md-button{'ng-click' => 'triggerFileSelection()', 'class' => 'md-raised md-primary'}
-            Upload file
-          %md-content{'ng-if' => 'project.specFile'}
-            File {{project.specFile.name}} selected
-          %input{'type' => 'file', 'ng-model' => 'project.specFile', 'file-upload' => '', 'class' => 'file-input'}
+        %fieldset
+          %legend About your project
+          %md-input-container{'flex' => ''}
+            %label Your budget:
+            %input{'ng-model' => 'project.budget', 'budget' => '', 'required' => ''}
+          %md-input-container{'flex' => ''}
+            %label Desired go-live date:
+            %input{'type' => 'date', 'ng-model' => 'project.goLive'}
+          %md-input-container{'flex' => ''}
+            %label Describe the main purpose of the application, e.g. the application makes the user able to book a holiday.
+            %textarea.description{'ng-model' => 'project.description', 'columns' => '1', 'md-maxlength' => 150, 'required' => ''}
+        %fieldset
+          %legend User stories (optional)
+          %md-input-container{'flex' => ''}
+            %label Now, describe the most important user stories. Example: *As a* customer, *I want to* add some items to my bag, *So that I* can buy it.
+            %user-story{'story' => 'project.currentStory'}
+          %md-chips{'ng-model' => 'project.currentStories', 'ng-show' => 'project.currentStories.length > 0', 'readonly' => 'true'}
+            %md-chip-template
+              %span
+                *As a*
+              %span.story-part{'ng-if' => '$chip.asA'} {{$chip.asA}}
+              %span{'ng-if' => '!$chip.asA'} [role]
+              %span
+                *I want to*
+              %span.story-part{'ng-if' => '$chip.iWant'} {{$chip.iWant}}
+              %span{'ng-if' => '!$chip.iWant'} [do something]
+              %span
+                *So that I*
+              %span.story-part{'ng-if' => '$chip.soThat'} {{$chip.soThat}}
+              %span{'ng-if' => '!$chip.soThat'} [can achieve something]'}}
+          %md-content
+            %md-button{'ng-click' => 'addCurrentStory()', 'class' => 'md-raised md-primary', 'ng-disabled' => '!isCurrentStoryComplete()'}
+              Add the user story
+          %md-chips{'ng-model' => 'project.stories', 'ng-show' => 'project.stories.length > 0'}
+            %md-chip-template
+              %span
+                *As a*
+              %span.story-part {{$chip.asA}}
+              %span
+                *I want to*
+              %span.story-part {{$chip.iWant}}
+              %span
+                *So that I*
+              %span.story-part {{$chip.soThat}}
+        %fieldset
+          %legend
+            Specification file (optional)
+          %md-container{'flex' => ''}
+            %label If you have already a project specification, please upload it.
+            %md-button{'ng-click' => 'triggerFileSelection()', 'class' => 'md-raised md-primary'}
+              Upload file
+            %md-content{'ng-if' => 'project.specFile'}
+              File {{project.specFile.name}} selected
+            %input{'type' => 'file', 'ng-model' => 'project.specFile', 'file-upload' => '', 'class' => 'file-input'}

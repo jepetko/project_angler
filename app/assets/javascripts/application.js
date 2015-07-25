@@ -124,16 +124,16 @@
     app.directive('userStory', [function() {
         return {
             restrict: 'E',
-            require: 'ngModel',
             replace: true,
-            scope: true,
-            template: '<div><textarea ng-model="story" columns="1" md-maxlength="150" class="current-story"></textarea></div>',
-            link: function(scope, el, attrs, ngModel) {
-                scope.story = '';
+            scope: {
+                story: '='
+            },
+            template: '<textarea columns="1" class="current-story"></textarea>',
+            link: function(scope, el, attrs) {
 
-                var parseUserInput = function() {
+                var parseUserInput = function(value) {
                     var regExp = new RegExp('^(As a(.*(?=I want to))?)(I want to(.*(?=So that I))?)?(So that I(.*)?)?\\.?$', 'gi');
-                    var groups = regExp.exec(scope.story);
+                    var groups = regExp.exec(value);
                     var updateModelArgs = [];
                     if (groups) {
                         if (groups.length > 2) {
@@ -155,14 +155,13 @@
                         iWant: iWant,
                         soThat: soThat
                     }
-                    ngModel.$setViewValue(value);
-                    ngModel.$setValidity('validStory', (asA && iWant && soThat));
+                    scope.story = value;
                 };
 
                 el.on('keydown', function(evt) {
-                    parseUserInput();
+                    parseUserInput( $(evt.target).val() );
                 }).on('input', function(evt) {
-                    parseUserInput();
+                    parseUserInput( $(evt.target).val() );
                 });
             }
         };
