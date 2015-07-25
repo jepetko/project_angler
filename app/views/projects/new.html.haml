@@ -22,13 +22,16 @@
           %md-chip-template
             %span
               *As a*
-            %span {{$chip.asA || '[role]'}}
+            %span.story-part{'ng-if' => '$chip.asA'} {{$chip.asA}}
+            %span{'ng-if' => '!$chip.asA'} [role]
             %span
               *I want to*
-            %span {{$chip.iWant || '[do something]'}}
+            %span.story-part{'ng-if' => '$chip.iWant'} {{$chip.iWant}}
+            %span{'ng-if' => '!$chip.iWant'} [do something]
             %span
               *So that I*
-            %span {{$chip.soThat || '[can achieve something]'}}
+            %span.story-part{'ng-if' => '$chip.soThat'} {{$chip.soThat}}
+            %span{'ng-if' => '!$chip.soThat'} [can achieve something]'}}
         %md-content
           %md-button{'ng-click' => 'addCurrentStory()', 'class' => 'md-raised md-primary', 'ng-disabled' => '!isCurrentStoryComplete()'}
             Add the user story
@@ -36,10 +39,10 @@
           %md-chip-template
             %span
               *As a*
-            %span {{$chip.asA}}
+            %span.story-part {{$chip.asA}}
             %span
               *I want to*
-            %span {{$chip.iWant}}
+            %span.story-part {{$chip.iWant}}
             %span
               *So that I*
-            %span {{$chip.soThat}}
+            %span.story-part {{$chip.soThat}}

@@ -39,3 +39,7 @@ md-chip-template > span:nth-child(even) {
 .current-story {
     width: 50%;
 }
+
+.story-part {
+    color: rgb(76,175,80);
+}
