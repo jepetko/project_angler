@@ -32,7 +32,13 @@
             },
             currentStories: [],
             stories: [],
-            specFile: null
+            specFile: null,
+            contact: {
+                name: '',
+                company: '',
+                phone: '',
+                mail: ''
+            }
         };
 
         $scope.clearCurrentStory = function() {

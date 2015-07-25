@@ -47,3 +47,7 @@ md-chip-template > span:nth-child(even) {
 .file-input {
     visibility: hidden;
 }
+
+fieldset {
+    border:1px solid rgb(76,175,80);
+}

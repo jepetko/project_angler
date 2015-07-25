@@ -60,3 +60,17 @@
             %md-content{'ng-if' => 'project.specFile'}
               File {{project.specFile.name}} selected
             %input{'type' => 'file', 'ng-model' => 'project.specFile', 'file-upload' => '', 'class' => 'file-input'}
+        %fieldset
+          %legend Contact data
+          %md-input-container{'flex' => ''}
+            %label Your name
+            %input{'ng-model' => 'project.contact.name', 'required' => ''}
+          %md-input-container{'flex' => ''}
+            %label Company name
+            %input{'ng-model' => 'project.contact.company', 'required' => ''}
+          %md-input-container{'flex' => ''}
+            %label Phone
+            %input{'ng-model' => 'project.contact.phone', 'required' => ''}
+          %md-input-container{'flex' => ''}
+            %label Email
+            %input{'ng-model' => 'project.contact.email', 'required' => ''}
