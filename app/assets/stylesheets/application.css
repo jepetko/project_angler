@@ -43,3 +43,7 @@ md-chip-template > span:nth-child(even) {
 .story-part {
     color: rgb(76,175,80);
 }
+
+.file-input {
+    visibility: hidden;
+}

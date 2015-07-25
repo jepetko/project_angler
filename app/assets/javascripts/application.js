@@ -31,7 +31,8 @@
                 soThat: ''
             },
             currentStories: [],
-            stories: []
+            stories: [],
+            specFile: null
         };
 
         $scope.clearCurrentStory = function() {
@@ -52,6 +53,10 @@
                 $scope.project.stories.push(angular.copy($scope.project.currentStory));
             }
             $scope.clearCurrentStory();
+        };
+
+        $scope.triggerFileSelection = function() {
+            $('input[type="file"]').click();
         };
 
         $scope.$watch('project.currentStory', function(newValue) {
@@ -158,6 +163,20 @@
                     parseUserInput();
                 }).on('input', function(evt) {
                     parseUserInput();
+                });
+            }
+        };
+    }]);
+    app.directive('fileUpload', [function() {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: true,
+            require: 'ngModel',
+            link: function(scope, el, attrs, ngModel) {
+                $(el).on('change', function() {
+                    ngModel.$setViewValue(this.files[0]);
+                    ngModel.$commitViewValue();
                 });
             }
         };

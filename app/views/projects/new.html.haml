@@ -46,3 +46,10 @@
             %span
               *So that I*
             %span.story-part {{$chip.soThat}}
+        %md-input-container{'flex' => ''}
+          %label If you have already a project specification, please upload it.
+          %md-button{'ng-click' => 'triggerFileSelection()', 'class' => 'md-raised md-primary'}
+            Upload file
+          %md-content{'ng-if' => 'project.specFile'}
+            File {{project.specFile.name}} selected
+          %input{'type' => 'file', 'ng-model' => 'project.specFile', 'file-upload' => '', 'class' => 'file-input'}
