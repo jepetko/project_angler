@@ -27,16 +27,16 @@
 
         $scope.project = {
             budget: '',
-            goLive: '',
+            go_live: '',
             description: '',
             currentStory: {
-                asA: '',
-                iWant: '',
-                soThat: ''
+                as_a: '',
+                i_want: '',
+                so_that: ''
             },
             currentStories: [],
             stories: [],
-            specFile: null,
+            spec_file: null,
             contact: {
                 name: '',
                 company: '',
@@ -49,15 +49,15 @@
 
         $scope.clearCurrentStory = function() {
             $scope.project.currentStory = {
-                asA: '',
-                iWant: '',
-                soThat: ''
+                as_a: '',
+                i_want: '',
+                so_that: ''
             };
         };
 
         $scope.isCurrentStoryComplete = function() {
             var story = $scope.project.currentStory;
-            return !!(story && story.asA && story.iWant && story.soThat);
+            return !!(story && story.as_a && story.i_want && story.so_that);
         };
 
         $scope.addCurrentStory = function() {
@@ -67,7 +67,8 @@
             $scope.clearCurrentStory();
         };
 
-        $scope.triggerFileSelection = function() {
+        $scope.triggerFileSelection = function($event) {
+            $event.preventDefault();
             $('input[type="file"]').click();
         };
 
@@ -82,7 +83,7 @@
             $http({
                 url: $scope.action,
                 method: 'POST',
-                data: $scope.project,
+                data: $.param({project: $scope.project}),
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'X-CSRF-Token': $scope.csrfToken
@@ -184,11 +185,11 @@
                     }
                 };
 
-                var updateModel = function(asA, iWant, soThat) {
+                var updateModel = function(as_a, i_want, so_that) {
                     var value = {
-                        asA: asA,
-                        iWant: iWant,
-                        soThat: soThat
+                        as_a: as_a,
+                        i_want: i_want,
+                        so_that: so_that
                     }
                     scope.story = value;
                 };

@@ -13,7 +13,7 @@
               Please, tell us what is your budget.
           %md-input-container{'flex' => ''}
             %label Desired go-live date:
-            %input{'type' => 'date', 'ng-model' => 'project.goLive', 'required' => '', 'name' => 'goLive'}
+            %input{'type' => 'date', 'ng-model' => 'project.go_live', 'required' => '', 'name' => 'goLive'}
             %div{'class' => 'error', 'ng-show' => 'showError(projectForm, "goLive")'}
               Please, tell us when you want to go live.
           %md-input-container{'flex' => ''}
@@ -30,16 +30,16 @@
             %md-chip-template
               %span
                 *As a*
-              %span.story-part{'ng-if' => '$chip.asA'} {{$chip.asA}}
-              %span{'ng-if' => '!$chip.asA'} [role]
+              %span.story-part{'ng-if' => '$chip.as_a'} {{$chip.as_a}}
+              %span{'ng-if' => '!$chip.as_a'} [role]
               %span
                 *I want to*
-              %span.story-part{'ng-if' => '$chip.iWant'} {{$chip.iWant}}
-              %span{'ng-if' => '!$chip.iWant'} [do something]
+              %span.story-part{'ng-if' => '$chip.i_want'} {{$chip.i_want}}
+              %span{'ng-if' => '!$chip.i_want'} [do something]
               %span
                 *So that I*
-              %span.story-part{'ng-if' => '$chip.soThat'} {{$chip.soThat}}
-              %span{'ng-if' => '!$chip.soThat'} [can achieve something]'
+              %span.story-part{'ng-if' => '$chip.so_that'} {{$chip.so_that}}
+              %span{'ng-if' => '!$chip.so_that'} [can achieve something]'
           %md-content
             %md-button{'ng-click' => 'addCurrentStory()', 'class' => 'md-raised md-primary', 'ng-disabled' => '!isCurrentStoryComplete()'}
               Add the user story
@@ -47,13 +47,13 @@
             %md-chip-template
               %span
                 *As a*
-              %span.story-part {{$chip.asA}}
+              %span.story-part {{$chip.as_a}}
               %span
                 *I want to*
-              %span.story-part {{$chip.iWant}}
+              %span.story-part {{$chip.i_want}}
               %span
                 *So that I*
-              %span.story-part {{$chip.soThat}}
+              %span.story-part {{$chip.so_that}}
         %fieldset
           %legend
             Specification file (optional)
@@ -61,9 +61,9 @@
             %label If you have already a project specification, please upload it.
             %md-button{'ng-click' => 'triggerFileSelection()', 'class' => 'md-raised md-primary'}
               Upload file
-            %md-content{'ng-if' => 'project.specFile'}
-              File {{project.specFile.name}} selected
-            %input{'type' => 'file', 'ng-model' => 'project.specFile', 'file-upload' => '', 'class' => 'file-input'}
+            %md-content{'ng-if' => 'project.spec_file'}
+              File {{project.spec_file.name}} selected
+            %input{'type' => 'file', 'ng-model' => 'project.spec_file', 'file-upload' => '', 'class' => 'file-input'}
         %fieldset
           %legend Contact data
           %md-input-container{'flex' => ''}
