@@ -89,4 +89,5 @@
         %md-content{'layout' => 'column'}
           %md-checkbox{'ng-model' => 'project.termsAccepted', 'required' => '', 'name' => 'termsAccepted'}
             I'm accepting the general terms.
-          %input{type: 'submit', value: 'Submit me'}
+          %md-button{'type' => 'submit', 'class' => 'md-raised md-warn'}
+            Submit the project
