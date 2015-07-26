@@ -20,7 +20,11 @@
             .primaryPalette('green')
             .accentPalette('light-green');
     });
-    app.controller('ProjectController', ['$scope', function($scope) {
+    app.controller('ProjectController', ['$scope', '$http', function($scope, $http) {
+
+        $scope.action = '/';
+        $scope.csrfToken = '';
+
         $scope.project = {
             budget: '',
             goLive: '',
@@ -38,7 +42,9 @@
                 company: '',
                 phone: '',
                 mail: ''
-            }
+            },
+            utf8: '',
+            authenticity_token: ''
         };
 
         $scope.clearCurrentStory = function() {
@@ -63,6 +69,29 @@
 
         $scope.triggerFileSelection = function() {
             $('input[type="file"]').click();
+        };
+
+        $scope.showError = function(form, fieldName) {
+            return (form.$submitted || form[fieldName].$touched) && form[fieldName].$invalid;
+        };
+
+        $scope.submit = function($event) {
+
+            $event.preventDefault();
+
+            $http({
+                url: $scope.action,
+                method: 'POST',
+                data: $scope.project,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-CSRF-Token': $scope.csrfToken
+                }
+            }).success(function(response) {
+                console.info(response);
+            }).error(function(error) {
+                console.error(error);
+            });
         };
 
         $scope.$watch('project.currentStory', function(newValue) {
@@ -121,7 +150,7 @@
                 ngModel.$formatters.unshift(function(value) {
                     if (!value) {
                         return '';
-                    };
+                    }
                     return value;
                 });
             }
@@ -183,6 +212,21 @@
                     ngModel.$setViewValue(this.files[0]);
                     ngModel.$commitViewValue();
                 });
+            }
+        };
+    }]);
+    app.directive('angularCompatible', [function() {
+        return {
+            restrict: 'A',
+            scope: false,
+            link: function(scope, el, attrs) {
+                var element = $(el);
+
+                var action = element.attr('action');
+                var utf8 = element.find('*[name="utf8"]');
+                var authenticityToken = element.find('*[name="authenticity_token"]');
+                scope.csrfToken = $('meta[name="csrf-token"]').attr('content');
+                scope.action = action + '?utf8=' + utf8.val() + '&authenticity_token=' + authenticityToken.val();
             }
         };
     }]);
