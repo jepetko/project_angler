@@ -2,7 +2,7 @@
   %div{'ng-controller' => 'ProjectController', 'class' => 'form-container'}
     %h2.md-display-1 Welcome to the Project Angler.
     .md-headline Fill out the form and submit it.
-    =form_for @project, html: {name: 'projectForm', 'ng-submit' => 'submit($event)', 'angular-compatible' => '', 'novalidate' => ''} do
+    =form_for @project, html: {name: 'projectForm', 'ng-submit' => 'submit(projectForm, $event)', 'angular-compatible' => '', 'novalidate' => ''} do
       %md-content
         %fieldset
           %legend About your project

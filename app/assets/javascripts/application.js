@@ -75,9 +75,13 @@
             return (form.$submitted || form[fieldName].$touched) && form[fieldName].$invalid;
         };
 
-        $scope.submit = function($event) {
+        $scope.submit = function(form, $event) {
 
             $event.preventDefault();
+            form.$setSubmitted();
+            if (form.$invalid) {
+                return false;
+            }
 
             $http({
                 url: $scope.action,
@@ -92,6 +96,8 @@
             }).error(function(error) {
                 console.error(error);
             });
+
+            return true;
         };
 
         $scope.$watch('project.currentStory', function(newValue) {
