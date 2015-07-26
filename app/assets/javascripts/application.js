@@ -67,8 +67,7 @@
             $scope.clearCurrentStory();
         };
 
-        $scope.triggerFileSelection = function($event) {
-            $event.preventDefault();
+        $scope.triggerFileSelection = function() {
             $('input[type="file"]').click();
         };
 

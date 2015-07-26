@@ -59,7 +59,7 @@
             Specification file (optional)
           %md-container{'flex' => ''}
             %label If you have already a project specification, please upload it.
-            %md-button{'ng-click' => 'triggerFileSelection()', 'class' => 'md-raised md-primary'}
+            %md-button{'type' => 'button', 'ng-click' => 'triggerFileSelection()', 'class' => 'md-raised md-primary'}
               Upload file
             %md-content{'ng-if' => 'project.spec_file'}
               File {{project.spec_file.name}} selected
