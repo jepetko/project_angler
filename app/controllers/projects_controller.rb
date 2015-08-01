@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
 
     if project.save
       @projects = Project.where inquirer: inquirer
-      render json: project
+      render json: project, include: {stories: {}, inquirer: {}}
     else
       inquirer.reload!
       @projects = []
