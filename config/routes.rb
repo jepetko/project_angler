@@ -58,6 +58,6 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :projects, only: [:index, :create]
+  resources :projects, only: [:index, :new, :create]
 
 end
