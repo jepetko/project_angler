@@ -15,22 +15,36 @@ describe ProjectsController do
         Fabricate.attributes_for(:project).merge(contact: inquirer_attributes, stories: stories_as_attributes)
       end
 
-      before do
-        post :create, project: project_attributes, format: :json
+      context 'inquirer with email does not exist so far' do
+        before do
+          post :create, project: project_attributes, format: :json
+        end
+
+        it 'creates a project' do
+          expect(Project.count).to be 1
+        end
+
+        it 'creates the inquirer automatically' do
+          expect(Project.last.inquirer).to have_attributes(inquirer_attributes)
+        end
+
+        it 'creates the user stories' do
+          expect(Project.last.stories.count).to be stories_as_attributes.count
+        end
       end
 
-      it 'creates a project' do
-        expect(Project.count).to be 1
-      end
+      context 'inquirer with email already exists' do
 
-      it 'creates the inquirer automatically' do
-        expect(Project.last.inquirer).to have_attributes(inquirer_attributes)
-      end
+        it 'updates the inquirer if it already exists' do
+          existing_inquirer_attributes = Fabricate.attributes_for(:inquirer)
+          existing_inquirer_attributes[:email] = inquirer_attributes[:email]
+          Inquirer.create existing_inquirer_attributes
 
-      it 'creates the user stories' do
-        expect(Project.last.stories.count).to be stories_as_attributes.count
+          post :create, project: project_attributes, format: :json
+          expect(Inquirer.count).to be 1
+          expect(Project.last.inquirer.email).to eq existing_inquirer_attributes[:email]
+        end
       end
-
     end
 
     context 'failure' do
