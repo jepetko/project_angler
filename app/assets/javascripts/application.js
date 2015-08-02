@@ -83,21 +83,21 @@
                 preserveScope: true,  // do not forget this if use parent scope
                 template: '<md-dialog>' +
                     '  <md-dialog-content>' +
-                        content +
+                    content +
                     '  </md-dialog-content>' +
                     '  <div class="md-actions">' +
-                        '  <md-button ng-click="closeDialog()" class="md-primary">' +
-                        '     Close' +
-                        '  </md-button>' +
+                    '  <md-button ng-click="closeDialog()" class="md-primary">' +
+                    '     Close' +
+                    '  </md-button>' +
                     '  </div>' +
                     '</md-dialog>',
-                controller: function DialogController($scope, $mdDialog) {
-                    $scope.closeDialog = function() {
-                        $mdDialog.hide().then(function() {
+                controller: ['$scope', '$mdDialog', function ($scope, $mdDialog) {
+                    $scope.closeDialog = function () {
+                        $mdDialog.hide().then(function () {
                             location.reload();
                         });
                     }
-                }
+                }]
             });
         };
 
