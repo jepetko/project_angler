@@ -20,7 +20,7 @@
             .primaryPalette('green')
             .accentPalette('light-green');
     });
-    app.controller('ProjectController', ['$scope', '$http', function($scope, $http) {
+    app.controller('ProjectController', ['$scope', '$http', '$mdDialog', function($scope, $http, $mdDialog) {
 
         $scope.action = '/';
         $scope.csrfToken = '';
@@ -76,6 +76,31 @@
             return (form.$submitted || form[fieldName].$touched) && form[fieldName].$invalid;
         };
 
+        $scope.showDialog = function(content) {
+            $mdDialog.show({
+                clickOutsideToClose: false,
+                scope: $scope,        // use parent scope in template
+                preserveScope: true,  // do not forget this if use parent scope
+                template: '<md-dialog>' +
+                    '  <md-dialog-content>' +
+                        content +
+                    '  </md-dialog-content>' +
+                    '  <div class="md-actions">' +
+                        '  <md-button ng-click="closeDialog()" class="md-primary">' +
+                        '     Close' +
+                        '  </md-button>' +
+                    '  </div>' +
+                    '</md-dialog>',
+                controller: function DialogController($scope, $mdDialog) {
+                    $scope.closeDialog = function() {
+                        $mdDialog.hide().then(function() {
+                            location.reload();
+                        });
+                    }
+                }
+            });
+        };
+
         $scope.submit = function(form, $event) {
 
             $event.preventDefault();
@@ -93,11 +118,10 @@
                     'X-CSRF-Token': $scope.csrfToken
                 }
             }).success(function(response) {
-                console.info(response);
+                $scope.showDialog('Your project has been submitted successfully!');
             }).error(function(error) {
-                console.error(error);
+                $scope.showDialog('Sorry, this is very embarrassing but your project has not been submitted.');
             });
-
             return true;
         };
 
