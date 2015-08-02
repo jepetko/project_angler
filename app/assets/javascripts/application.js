@@ -215,8 +215,12 @@
             require: 'ngModel',
             link: function(scope, el, attrs, ngModel) {
                 $(el).on('change', function() {
-                    ngModel.$setViewValue(this.files[0]);
-                    ngModel.$commitViewValue();
+                    var reader = new FileReader();
+                    reader.onload = function(evt) {
+                        ngModel.$setViewValue(evt.target.result);
+                        ngModel.$commitViewValue();
+                    };
+                    reader.readAsBinaryString(this.files[0]);
                 });
             }
         };

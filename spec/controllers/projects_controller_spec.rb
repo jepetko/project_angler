@@ -3,62 +3,54 @@ require 'rails_helper'
 describe ProjectsController do
   render_views
 
-  let(:inquirer) { Fabricate(:inquirer) }
-  let!(:projects) { [ Fabricate(:project, inquirer: inquirer), Fabricate(:project, inquirer: inquirer) ] }
-
-  describe 'GET :new' do
-    context 'success' do
-      before do
-        get :new
-      end
-
-      it 'sets a @project instances' do
-        expect(assigns(:project)).to be_a(Project)
-      end
-    end
-  end
-
   describe 'POST :create' do
 
+    let(:inquirer_attributes) { Fabricate.attributes_for(:inquirer) }
+    let(:story_attributes) { Fabricate.attributes_for(:story) }
+    let(:stories_as_attributes) { 2.times.map { story_attributes } }
+
     context 'success' do
 
-      let(:project) { Fabricate.attributes_for(:project, inquirer: inquirer) }
+      let(:project_attributes) do
+        Fabricate.attributes_for(:project).merge(contact: inquirer_attributes, stories: stories_as_attributes)
+      end
+
       before do
-        post :create, project: project
+        post :create, project: project_attributes, format: :json
       end
 
-      it 'redirects to /projects' do
-        expect(response).to redirect_to projects_path
+      it 'creates a project' do
+        expect(Project.count).to be 1
       end
 
-      it 'sets the @projects submitted so far by this inquirer' do
-        last_project = Project.last
-        expect(assigns(:projects)).to eq(projects + [last_project])
+      it 'creates the inquirer automatically' do
+        expect(Project.last.inquirer).to have_attributes(inquirer_attributes)
       end
+
+      it 'creates the user stories' do
+        expect(Project.last.stories.count).to be stories_as_attributes.count
+      end
+
     end
 
     context 'failure' do
 
-      let(:project) { Fabricate.attributes_for(:project, inquirer: inquirer).merge description: nil }
-      before do
-        post :create, project: project
+      let(:project_attributes) do
+        Fabricate.attributes_for(:project).merge(description: nil, contact: inquirer_attributes, stories: stories_as_attributes)
       end
 
-      it 'sets @project submitted recently' do
-        expect(assigns(:project).attributes).to eq Project.new(project).attributes
-        #expect(assigns(:project)).to eq Project.new(project)
+      before do
+        post :create, project: project_attributes, format: :json
       end
 
       it 'does not save anything' do
-        expect(Project.all).to eq projects
-      end
-
-      it 'renders the new template' do
-        expect(response).to render_template 'projects/new'
+        expect(Inquirer.count).to be 0
+        expect(Story.count).to be 0
+        expect(Project.count).to be 0
       end
 
       it 'sets error message' do
-        expect(flash[:error]).to be
+        expect(JSON.parse(response.body)).to include({'description' => ["can\'t be blank"]})
       end
     end
 

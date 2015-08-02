@@ -6,13 +6,12 @@ class Project < ActiveRecord::Base
   validates_presence_of :inquirer
 
   def stories=(stories)
-    if stories.instance_of? ActionController::Parameters
-      stories.values.each do |story_params|
+    if stories.first.instance_of? ActionController::Parameters
+      stories.each do |story_params|
         story = self.stories.build story_params.to_hash
         story.save!
       end
-    else
-      self.stories = stories
     end
   end
+
 end

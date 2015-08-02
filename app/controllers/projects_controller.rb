@@ -2,18 +2,23 @@ class ProjectsController < ApplicationController
 
 
   def create
-    email = inquirer_params[:contact][:email]
-    Inquirer.create inquirer_params[:contact] unless Inquirer.exists?(email: email)
-    inquirer = Inquirer.find_by email: email
-    project = inquirer.projects.build project_params
+    project = nil
+    begin
+      ActiveRecord::Base.transaction do
+        email = inquirer_params[:contact][:email]
+        inquirer = Inquirer.new inquirer_params[:contact]
+        inquirer.save! unless Inquirer.exists?(email: email)
+        inquirer = Inquirer.find_by email: email
+        project = inquirer.projects.build project_params
 
-    if project.save
-      @projects = Project.where inquirer: inquirer
-      render json: project, include: {stories: {}, inquirer: {}}
-    else
-      inquirer.reload!
-      @projects = []
+        if project.save!
+          render json: project, include: {stories: {}, inquirer: {}}
+        end
+      end
+    rescue ActiveRecord::RecordInvalid => e
       render json: project.errors.messages
+    rescue Exception => e
+      render json: {exception: e.message}
     end
   end
 
@@ -26,6 +31,6 @@ class ProjectsController < ApplicationController
   end
 
   private def project_params
-    params.require(:project).permit :budget, :go_live, :description, :stories => [:as_a, :i_want, :so_that]
+    params.require(:project).permit :budget, :go_live, :description, :spec_file, :stories => [:as_a, :i_want, :so_that]
   end
 end
