@@ -65,7 +65,7 @@
             %md-button{'type' => 'button', 'ng-click' => 'triggerFileSelection()', 'class' => 'md-raised md-primary'}
               Upload file
             %md-content{'ng-if' => 'project.spec_file'}
-              File {{project.spec_file.name}} selected
+              File <b>{{spec_file_descriptor.name}}</b> selected
             %input{'type' => 'file', 'ng-model' => 'project.spec_file', 'file-upload' => '', 'class' => 'file-input'}
         %fieldset
           %legend Contact data
@@ -86,11 +86,13 @@
               phone is required
           %md-input-container{'flex' => ''}
             %label Email
-            %input{'ng-model' => 'project.contact.email', 'required' => '', 'name' => 'contactEmail'}
+            %input{'ng-model' => 'project.contact.email', 'type' => 'email', 'required' => '', 'name' => 'contactEmail'}
             %div{'class' => 'error', 'ng-show' => 'showError(projectForm, "contactEmail")'}
               email is required
         %md-content{'layout' => 'column'}
           %md-checkbox{'ng-model' => 'project.termsAccepted', 'required' => '', 'name' => 'termsAccepted'}
             I'm accepting the general terms.
+          %div{'class' => 'error', 'ng-show' => 'showError(projectForm, "termsAccepted")'}
+            Accept the general terms, please!
           %md-button{'type' => 'submit', 'class' => 'md-raised md-warn'}
             Submit the project

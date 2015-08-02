@@ -24,6 +24,7 @@
 
         $scope.action = '/';
         $scope.csrfToken = '';
+        $scope.spec_file_descriptor = { name: '' };
 
         $scope.project = {
             budget: '',
@@ -214,7 +215,13 @@
             scope: true,
             require: 'ngModel',
             link: function(scope, el, attrs, ngModel) {
-                $(el).on('change', function() {
+                $(el).on('change', function(evt) {
+                    var fullPath = evt.target.value;
+                    var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+                    var filename = fullPath.substring(startIndex);
+                    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                        scope.spec_file_descriptor.name = filename.substring(1);
+                    }
                     var reader = new FileReader();
                     reader.onload = function(evt) {
                         ngModel.$setViewValue(evt.target.result);
