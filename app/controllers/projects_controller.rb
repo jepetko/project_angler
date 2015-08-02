@@ -26,11 +26,13 @@ class ProjectsController < ApplicationController
     @project = Project.new
   end
 
-  private def inquirer_params
+  private
+
+  def inquirer_params
     params.require(:project).permit :contact => [:name, :email, :phone, :company]
   end
 
-  private def project_params
+  def project_params
     params.require(:project).permit :budget, :go_live, :description, :spec_file, :stories => [:as_a, :i_want, :so_that]
   end
 end
