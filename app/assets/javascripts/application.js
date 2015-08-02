@@ -15,11 +15,11 @@
 
 (function(angular) {
     var app = angular.module('app', ['ngMaterial'])
-    .config(function($mdThemingProvider) {
+    .config(['$mdThemingProvider', function($mdThemingProvider) {
         $mdThemingProvider.theme('default')
             .primaryPalette('green')
             .accentPalette('light-green');
-    });
+    }]);
     app.controller('ProjectController', ['$scope', '$http', '$mdDialog', function($scope, $http, $mdDialog) {
 
         $scope.action = '/';
